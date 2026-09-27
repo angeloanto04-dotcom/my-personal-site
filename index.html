@@ -5,23 +5,182 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的个人主页</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; line-height: 1.6; }
-        header { background-color: #0078d7; color: white; text-align: center; padding: 1rem; }
-        nav { background-color: #f3f3f3; padding: 0.5rem; text-align: center; }
-        nav a { margin: 0 15px; text-decoration: none; color: #0078d7; }
-        main { padding: 2rem; text-align: center; }
-        footer { background-color: #f3f3f3; text-align: center; padding: 1rem; position: fixed; bottom: 0; width: 100%; }
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --muted: #64748b;
+            --card: #ffffff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        /* 顶部导航 */
+        header.nav {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 1px 10px rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.9rem 2rem;
+        }
+        header.nav .logo { font-weight: 700; color: var(--primary); font-size: 1.2rem; }
+        header.nav nav a {
+            margin-left: 1.6rem;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+        header.nav nav a:hover { color: var(--primary); }
+
+        /* 区块通用 */
+        section { padding: 5rem 1.5rem; max-width: 960px; margin: 0 auto; }
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+            text-align: center;
+            position: relative;
+        }
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 48px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+            margin: 0.6rem auto 0;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 7rem 1.5rem 5rem;
+            background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 60%, #f8fafc 100%);
+        }
+        .hero .avatar {
+            width: 96px; height: 96px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), #60a5fa);
+            color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.4rem; font-weight: 700;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.3);
+        }
+        .hero h1 { font-size: 2.6rem; margin-bottom: 0.8rem; }
+        .hero p { color: var(--muted); font-size: 1.1rem; max-width: 560px; margin: 0 auto; }
+        .hero .cta {
+            display: inline-block;
+            margin-top: 2rem;
+            background: var(--primary);
+            color: #fff;
+            padding: 0.8rem 2rem;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .hero .cta:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+        /* 关于 */
+        .about p { color: var(--muted); text-align: center; max-width: 680px; margin: 0 auto; }
+
+        /* 联系方式卡片 */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
+            margin-top: 2rem;
+        }
+        .card {
+            background: var(--card);
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 1.6rem;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
+        .card .icon { font-size: 2rem; margin-bottom: 0.6rem; }
+        .card a { color: var(--primary); text-decoration: none; font-weight: 600; }
+        .card a:hover { text-decoration: underline; }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+            border-top: 1px solid #e2e8f0;
+            background: var(--card);
+        }
+
+        @media (max-width: 600px) {
+            header.nav { flex-direction: column; gap: 0.6rem; padding: 0.8rem; }
+            header.nav nav a { margin: 0 0.8rem; }
+            .hero h1 { font-size: 2rem; }
+        }
     </style>
 </head>
 <body>
-    <header><h1>我的个人主页</h1></header>
-    <nav>
-        <a href="#">首页</a><a href="#">关于</a><a href="#">联系方式</a>
-    </nav>
-    <main>
-        <h2>欢迎来到我的网站！</h2>
-        <p>这里是我的个人主页，我会在这里分享我的经历和作品。</p>
-    </main>
-    <footer><p>&copy; 2024 我的个人主页</p></footer>
+    <header class="nav">
+        <div class="logo">我的主页</div>
+        <nav>
+            <a href="#home">首页</a>
+            <a href="#about">关于</a>
+            <a href="#contact">联系方式</a>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="avatar">我</div>
+        <h1>你好，欢迎来到我的个人主页</h1>
+        <p>这里记录我的经历、作品与思考。很高兴你能到来，慢慢逛逛吧。</p>
+        <a class="cta" href="#about">了解更多</a>
+    </section>
+
+    <section id="about">
+        <h2 class="section-title">关于我</h2>
+        <div class="about">
+            <p>我是一名热爱探索与创造的人，喜欢把想法变成现实。平时关注技术、设计与生活之间的交集，也乐于分享一路上的收获与踩过的坑。这个小小的主页，是我留给互联网的一扇窗口。</p>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2 class="section-title">联系方式</h2>
+        <div class="cards">
+            <div class="card">
+                <div class="icon">✉️</div>
+                <h3>邮箱</h3>
+                <p><a href="mailto:angeloanto04-dotcom@gmail.com">angeloanto04-dotcom@gmail.com</a></p>
+            </div>
+            <div class="card">
+                <div class="icon">💻</div>
+                <h3>GitHub</h3>
+                <p><a href="https://github.com/angeloanto04-dotcom" target="_blank" rel="noopener">@angeloanto04-dotcom</a></p>
+            </div>
+            <div class="card">
+                <div class="icon">🌐</div>
+                <h3>网站</h3>
+                <p><a href="https://angeloanto04-dotcom.github.io/my-personal-site/" target="_blank" rel="noopener">我的主页</a></p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 我的个人主页 · 由 WorkBuddy 部署于 GitHub Pages</p>
+    </footer>
 </body>
 </html>
